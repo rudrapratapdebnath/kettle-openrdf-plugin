@@ -246,7 +246,11 @@ public class OpenRDFStepMeta extends BaseStepMeta implements StepMetaInterface {
 					r.addValueMeta(valueMeta);
 				}
 			}
-		} catch (RepositoryException | QueryEvaluationException | MalformedQueryException e) {
+		} catch (RepositoryException e) {
+			logError("Unable to get openRDF step fields", e);
+		} catch (QueryEvaluationException e) {
+			logError("Unable to get openRDF step fields", e);
+		} catch (MalformedQueryException e) {
 			logError("Unable to get openRDF step fields", e);
 		} finally {
 			data.disconnect();

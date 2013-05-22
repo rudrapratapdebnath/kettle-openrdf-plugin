@@ -373,7 +373,13 @@ public class OpenRDFStepDialog extends BaseStepDialog implements StepDialogInter
 			mb.setMessage(BaseMessages.getString(PKG, "OpenRDF.Connected.OK") +Const.CR); //$NON-NLS-1$
 			mb.setText(BaseMessages.getString(PKG, "OpenRDF.Connected.Title.OK")); //$NON-NLS-1$
 			mb.open();
-		} catch (RepositoryException | QueryEvaluationException | MalformedQueryException e) {
+		} catch (RepositoryException e) {
+			logError("openRDF connection test failed", e);
+			new ErrorDialog(shell, BaseMessages.getString(PKG, "OpenRDF.Connected.Title.Error"), BaseMessages.getString(PKG, "OpenRDF.Connected.Error"), e);
+		} catch (QueryEvaluationException e) {
+			logError("openRDF connection test failed", e);
+			new ErrorDialog(shell, BaseMessages.getString(PKG, "OpenRDF.Connected.Title.Error"), BaseMessages.getString(PKG, "OpenRDF.Connected.Error"), e);
+		} catch (MalformedQueryException e) {
 			logError("openRDF connection test failed", e);
 			new ErrorDialog(shell, BaseMessages.getString(PKG, "OpenRDF.Connected.Title.Error"), BaseMessages.getString(PKG, "OpenRDF.Connected.Error"), e);
 		} finally {
