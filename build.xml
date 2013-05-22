@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="kettle-openrdf-plugin" default="deploy" basedir=".">
+	
+    <property file="./build.properties"/>
+
+	<path id="class.path">
+		<fileset dir="${kettle.lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+		<fileset dir="${openrdf-sesame.lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+		<fileset dir="${swt.lib.dir}">
+	    	<include name="**/*.jar"/>
+	    </fileset>
+	</path>
+
+    <target name="clean" description="Clean all the output directories">
+    	<delete dir="${classes.dir}"/>
+    	<delete dir="${deploy.dir}"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <echo level="info" message="Build started by ${user.name}"/>
+    	<tstamp/>
+    	<mkdir dir="${classes.dir}"/>
+    	<mkdir dir="${deploy.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+    	<javac destdir="${classes.dir}"
+            classpathref="class.path"
+            debug="on"
+            deprecation="on"
+            verbose="false"
+    		source="${java.source.version}"
+    		target="${java.target.version}"
+            includeantruntime="false">
+        	<src path="${src.dir}"/>
+        </javac>
+    </target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="${deploy.dir}/${jar.name}" basedir="${classes.dir}">
+			<fileset dir="${src.dir}" includes="**/*.properties"/>
+		</jar>
+	</target>
+
+    <target name="deploy" depends="jar">
+    	<copy todir="${pdi.plugin.dir}" verbose="true" overwrite="true" flatten="true">
+    		<fileset dir="${deploy.dir}">
+				<include name="${jar.name}"/>
+            </fileset>
+    		<fileset dir="${resource.dir}">
+    			<include name="*.*"/>
+    		</fileset>
+		</copy>
+    </target>
+        			
+</project>
