@@ -1,0 +1,24 @@
+#summary Installation instructions for openRDF for PDI plugin.
+
+= Pre-requisites =
+
+openRDF for PDI has the following dependencies
+ * [http://www.oracle.com/technetwork/java/javase/downloads/index.html JDK 1.5] or above.
+ * [http://sourceforge.net/projects/pentaho/files/Data%20Integration/ PDI version 4.x] or later release.
+ * [http://www.openrdf.org/download.jsp openRDF Sesame 2.x] release
+
+= Download/Unzip =
+
+[https://code.google.com/p/kettle-openrdf-plugin/downloads/list Download the latest openRDF] for PDI release.
+
+Unzip the archive to ${PDI_HOME}/plugins/steps. This should create a folder named *OpenRDFInput* under ${PDI_HOME}/plugins/steps.
+
+= Verify installation =
+
+Start or restart the PDI Spoon UI (${PDI_HOME}/spoon.sh or ${PDI_HOME}/spoon.bat).
+
+Create a new PDI Transformation. You should now have a design tab with all the available steps.
+
+Open the Big Data category and drag/drop the *openRDF Input* step onto the canvas.
+
+Congratulations, openRDF for PDI is now installed. You can now start building your first transformation.
