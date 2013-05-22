@@ -1,3 +1,5 @@
+#summary Guides you through the process of creating a PDI transformation with 2 steps
+
 = Introduction = 
 This document guides you through the process of creating a PDI transformation with 2 steps:
  * The openRDF Input step which generates data by executing a SPARQL query on a repository 
