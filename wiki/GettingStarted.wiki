@@ -21,7 +21,9 @@ http://kettle-openrdf-plugin.googlecode.com/svn/wiki/images/Spoon-004.png
  * The default repository URL connects to the openRDF/Sesame SYSTEM repository on localhost. Click on the Test Connection button to verify the repository is valid
  * The default SPARQL query returns the IDs of all repositories. Click on the Preview button to verify that the query produces output.
 
-Probably a good time to save the PDI transformation. You can give it whatever name you like and store it on your file system as a .ktr file or in a PDI repository.
+Now double-click on the Excel Output step. The only parameter you need to provide is the location to output the Excel worksheet
+
+Save the PDI transformation. Give it any name you like and store it on your file system as a .ktr file or in a PDI repository.
 
 = Run the PDI transformation =
 You can run the transformation directly or in debug mode. Finally, open the excel worksheet that was produced. Now you have a working example of a transformation that executes a SPARQL query and turns the result into an excel worksheet.
