@@ -16,7 +16,7 @@ http://kettle-openrdf-plugin.googlecode.com/svn/wiki/images/Spoon-003.png
 = Configure Steps =
 Double click on the openRDF Input step (or right click, Edit step from the context menu) to bring up the setup dialog:
 
-http://kettle-openrdf-plugin.googlecode.com/svn/wiki/images/Spoon-003.png
+http://kettle-openrdf-plugin.googlecode.com/svn/wiki/images/Spoon-004.png
 
  * The default repository URL connects to the openRDF/Sesame SYSTEM repository on localhost. Click on the Test Connection button to verify the repository is valid
  * The default SPARQL query returns the IDs of all repositories. Click on the Preview button to verify that the query produces output.
