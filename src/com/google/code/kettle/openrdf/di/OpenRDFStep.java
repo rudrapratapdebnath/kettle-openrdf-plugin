@@ -124,7 +124,11 @@ public class OpenRDFStep extends BaseStep implements StepInterface {
 					putRow(outputRowMeta, outputRow);
 				}
 			}
-		} catch (MalformedQueryException | QueryEvaluationException | RepositoryException e) {
+		} catch (MalformedQueryException  e) {
+			throw new KettleException(e);
+		} catch (QueryEvaluationException e) {
+			throw new KettleException(e);
+		} catch (RepositoryException e) {
 			throw new KettleException(e);
 		}
 		//Indicate step is finished and processRow() should not be called again
