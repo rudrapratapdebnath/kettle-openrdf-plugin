@@ -234,7 +234,8 @@ public class OpenRDFStepMeta extends BaseStepMeta implements StepMetaInterface {
 		OpenRDFStepData data = new OpenRDFStepData();
 		try {
 			data.connect(getRepositoryURL());
-			data.runQuery(getSparql());
+			String sparql = space.environmentSubstitute(getSparql());
+			data.runQuery(sparql);
 			List<String> fields = data.getTupleQueryResult().getBindingNames();
 			if (fields != null) {
 				for (String field : fields) {

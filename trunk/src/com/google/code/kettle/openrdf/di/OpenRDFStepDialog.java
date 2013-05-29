@@ -72,7 +72,7 @@ public class OpenRDFStepDialog extends BaseStepDialog implements StepDialogInter
 	// the dialog reads the settings from it when opening
 	// the dialog writes the settings to it when confirmed
 	private OpenRDFStepMeta meta;
-
+	
 	// text field holding the name of the field to add to the row stream
 	private Text wRepositoryUrl;
 	private StyledTextComp wSparql;
@@ -93,7 +93,8 @@ public class OpenRDFStepDialog extends BaseStepDialog implements StepDialogInter
 	 */
 	public OpenRDFStepDialog(Shell parent, Object in, TransMeta transMeta, String sname) {
 		super(parent, (BaseStepMeta) in, transMeta, sname);
-		meta = (OpenRDFStepMeta) in;
+		this.meta = (OpenRDFStepMeta) in;
+		transMeta.activateParameters();
 	}
 
 	/**
@@ -335,7 +336,8 @@ public class OpenRDFStepDialog extends BaseStepDialog implements StepDialogInter
 		// Create the table input reader step...
 		OpenRDFStepMeta meta = new OpenRDFStepMeta();
 		meta.setRepositoryURL(wRepositoryUrl.getText());
-		meta.setSparql(wSparql.getText());
+		String sparql = transMeta.environmentSubstitute(wSparql.getText());
+		meta.setSparql(sparql);
 		
 		TransMeta previewMeta = TransPreviewFactory.generatePreviewTransformation(transMeta, meta, wStepname.getText());
 		EnterNumberDialog numberDialog = new EnterNumberDialog(shell, props.getDefaultPreviewSize(), BaseMessages.getString(PKG, "OpenRDF.EnterPreviewSize"), BaseMessages.getString(PKG, "OpenRDF.NumberOfRowsToPreview")); //$NON-NLS-1$ //$NON-NLS-2$
