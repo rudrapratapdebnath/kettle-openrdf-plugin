@@ -50,6 +50,7 @@ import org.pentaho.di.ui.core.dialog.EnterTextDialog;
 import org.pentaho.di.ui.core.dialog.ErrorDialog;
 import org.pentaho.di.ui.core.dialog.PreviewRowsDialog;
 import org.pentaho.di.ui.core.widget.StyledTextComp;
+import org.pentaho.di.ui.core.widget.TextVar;
 import org.pentaho.di.ui.trans.dialog.TransPreviewProgressDialog;
 import org.pentaho.di.ui.trans.step.BaseStepDialog;
 import org.pentaho.di.ui.trans.steps.tableinput.SQLValuesHighlight;
@@ -74,7 +75,7 @@ public class OpenRDFStepDialog extends BaseStepDialog implements StepDialogInter
 	private OpenRDFStepMeta meta;
 	
 	// text field holding the name of the field to add to the row stream
-	private Text wRepositoryUrl;
+	private TextVar wRepositoryUrl;
 	private StyledTextComp wSparql;
 	private Button wTest;
 	private Listener lsTest;
@@ -183,7 +184,7 @@ public class OpenRDFStepDialog extends BaseStepDialog implements StepDialogInter
 		fdlRepositoryURL.top = new FormAttachment(wStepname, margin);
 		wlRepositoryURL.setLayoutData(fdlRepositoryURL);
 
-		wRepositoryUrl = new Text(shell, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wRepositoryUrl = new TextVar(transMeta, shell, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		props.setLook(wRepositoryUrl);
 		wRepositoryUrl.addModifyListener(lsMod);
 		FormData fdRepositoryURL = new FormData();
@@ -335,7 +336,8 @@ public class OpenRDFStepDialog extends BaseStepDialog implements StepDialogInter
 	private void preview() {
 		// Create the table input reader step...
 		OpenRDFStepMeta meta = new OpenRDFStepMeta();
-		meta.setRepositoryURL(wRepositoryUrl.getText());
+		String repositoryURL = transMeta.environmentSubstitute(wRepositoryUrl.getText());
+		meta.setRepositoryURL(repositoryURL);
 		String sparql = transMeta.environmentSubstitute(wSparql.getText());
 		meta.setSparql(sparql);
 		
@@ -366,9 +368,9 @@ public class OpenRDFStepDialog extends BaseStepDialog implements StepDialogInter
 	private void test() {
 		OpenRDFStepData data = new OpenRDFStepData();
 		try {
-			String repositoryUrl = wRepositoryUrl.getText();
+			String repositoryUrl = transMeta.environmentSubstitute(wRepositoryUrl.getText());
 			logBasic("Attempting to connect to "+repositoryUrl);
-			data.connect(wRepositoryUrl.getText());
+			data.connect(repositoryUrl);
 			String sparql = "SELECT DISTINCT ?type \nWHERE { \n  ?thing a ?type . \n} \nORDER BY ?type";
 			data.runQuery(sparql);
 			MessageBox mb = new MessageBox(shell, SWT.OK | SWT.ICON_INFORMATION );
