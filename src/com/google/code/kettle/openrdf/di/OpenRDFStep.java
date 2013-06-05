@@ -18,6 +18,7 @@ package com.google.code.kettle.openrdf.di;
 
 import java.util.List;
 
+import org.openrdf.model.Value;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.MalformedQueryException;
 import org.openrdf.query.QueryEvaluationException;
@@ -72,13 +73,15 @@ public class OpenRDFStep extends BaseStep implements StepInterface {
 	public boolean init(StepMetaInterface smi, StepDataInterface sdi) {
 		OpenRDFStepMeta meta = (OpenRDFStepMeta) smi;
 		OpenRDFStepData data = (OpenRDFStepData) sdi;
+		boolean init = super.init(meta, data);
 		try {
-			data.connect(meta.getRepositoryURL());
+			String repositoryURL = environmentSubstitute(meta.getRepositoryURL());
+			data.connect(repositoryURL);
 		} catch (RepositoryException e) {
 			logError("Unable to initialise openRDF step ", e);
 			return false;
 		}
-		return super.init(meta, data);
+		return init;
 	}	
 
 	/**
@@ -118,7 +121,12 @@ public class OpenRDFStep extends BaseStep implements StepInterface {
 					RowMetaInterface outputRowMeta = new RowMeta();
 					for (int i=0; i<fields.size(); i++) {
 						String field = fields.get(i);
-						outputRow[i] = bindingSet.getValue(field).stringValue();
+						Value value = bindingSet.getValue(field);
+						if (value == null) {
+							outputRow[i] = null;
+						} else {
+							outputRow[i] = bindingSet.getValue(field).stringValue();
+						}
 						outputRowMeta.addValueMeta(i, new ValueMeta(field, ValueMeta.TYPE_STRING));
 					}
 					putRow(outputRowMeta, outputRow);
