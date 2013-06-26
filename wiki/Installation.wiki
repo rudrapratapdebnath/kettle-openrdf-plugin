@@ -13,7 +13,7 @@ openRDF for PDI has the following dependencies
 
 Unzip the archive to ${PDI_HOME}/plugins/steps. This should create a folder named *OpenRDFInput* under ${PDI_HOME}/plugins/steps.
 
-Add all the sesame-*.jar files in the openRDF Sesame lib folder to ${PDI_HOME}/libext
+Add all the sesame-xxx.jar files in the openRDF Sesame lib folder to ${PDI_HOME}/libext
 
 = Verify installation =
 
